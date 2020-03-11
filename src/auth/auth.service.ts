@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from "../users/users.service";
 import { JwtService } from '@nestjs/jwt';
-import {jwtConstants} from "./constants";
+import { jwtConstants } from "./constants";
 
 @Injectable()
 export class AuthService {
@@ -21,11 +21,17 @@ export class AuthService {
 
     async login(user: any) {
         const payload = { username: user.username, sub: user.userId, expiresIn: jwtConstants.tokenLife };
-        const refreshPayload = {username: user.username, sub: user.userId, expiresIn: jwtConstants.refreshTokenLife };
+        const refreshPayload = { sub: user.userId, expiresIn: jwtConstants.refreshTokenLife };
+
         return {
             accessToken: this.jwtService.sign(payload),
             refreshToken: this.jwtService.sign(refreshPayload),
         };
+
+    }
+
+    async refresh(req) {
+        const { refreshToken } = req.token;
 
     }
 }

@@ -13,6 +13,12 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
+  @UseGuards(LocalAuthGuard)
+  @Post('refresh')
+  async refresh(@Request() req) {
+    return this.authService.refresh(req.token);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {

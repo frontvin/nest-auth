@@ -1,0 +1,24 @@
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "john",
+  "password": "changeme"
+}
+
+> {% client.global.set("access_token", response.body.accessToken); %}
+
+### Authorization by token, part 2. Use token to authorize.
+GET http://localhost:3000/profile
+Authorization: Bearer {{access_token}}
+
+###
+
+POST http://localhost:3000/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImV4cGlyZXNJbiI6IjEwcyIsImlhdCI6MTU4MzkzNDg0OCwiZXhwIjoxNTg0MDIxMjQ4fQ.nQ0PuglE-UEdHu2ZtWO0eadvUaqt0wS4sKJ51It_6ns"
+}
+###
